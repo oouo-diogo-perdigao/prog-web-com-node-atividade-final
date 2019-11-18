@@ -12,7 +12,7 @@ Vocês foram contratados pela empresa SM Tech para desenvolver um sistema de arm
 
 tarefas:
  - criar projeto front X
- - criar projeto back
+ - criar projeto back X
  - front de login
  - back login
  - criar bd
