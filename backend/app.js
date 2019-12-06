@@ -14,6 +14,7 @@ const io = require("socket.io").listen(http);
 //#region Passport.js
 const passport = require("passport");
 require("./configs/google.strategy");
+require("./configs/github.strategy");
 //#endregion
 
 //#region conexões via socket
@@ -90,8 +91,8 @@ app.use(function(err, req, res, next) {
 //#endregion
 
 //Inicia o servidor escutando na porta 3000
-http.listen(3000, function() {
-  console.log("Example app listening on port 3000!");
-});
+// http.listen(3000, function() {
+//   console.log("Example app listening on port 3000!");
+// });
 
 module.exports = app;
