@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Hello world!</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+
+	$( document ).ready(function() {
+		const socket = io('http://be-dev.travelrpg.com:8080');
+		const contentForm = document.getElementById("comment-form");
+		contentForm.onsubmit = function(event) {
+			event.preventDefault();
+			const message = {
+				author: "{{user.displayName}} via {{user.provider}}",
+				comment: document.getElementById('comment').value,
+			};
+			console.log("envio cliente");
+			console.log(message);
+			socket.emit('sendMessageChat', message);
+		};
+		const textBox = document.getElementById('messages');
+		const renderMessage = message => {
+			const element = document.createElement('li');
+			element.innerHTML = `<strong>${message.author}</strong>: ${message.comment}`;
+			textBox.append(element);
+		};
+		socket.on('updateMessageChat', conteudo => {
+			console.log("recebe cliente");
+			console.warn(conteudo);
+			renderMessage(conteudo);
+		});
+		socket.on('getid', conteudo => {
+			console.log("recebe id cliente");
+			console.warn(conteudo);
+		});
+	});
+
+
+	</script>
+
+	<ul id="messages"></ul>
+
+	<form id="comment-form">
+		<input type="text" name="comment" id="comment">
+		<input type="submit" value="Enviar">
+	</form>
+</body>
+</html>
