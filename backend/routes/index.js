@@ -1,6 +1,9 @@
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
+var multer  = require('multer')
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage })
 
 var url = require("url");
 
@@ -41,13 +44,29 @@ router.get(
   "/auth/github/callback",
   passport.authenticate("github", { failureRedirect: "/login" }),
   function(req, res) {
-    res.redirect("http://localhost:8080/index.html");
+    res.redirect("/main.html");
   }
 );
 
-router.get("/admin", ensureAuthenticated, function(req, res) {
-  res.render("admin", { user: req.session.passport.user });
+router.get("/files", ensureAuthenticated, function(req, res) {
+    res.json({ "arquivos": "TODO" });
 });
+
+router.post("/files", ensureAuthenticated, upload.single('fileUpload'), function(req, res) {
+    // res.json({ "arquivos": "upload TODO" });
+    console.log(req.file); 
+    res.send('ok'); 
+});
+
+router.delete("/files/:name", ensureAuthenticated, function(req, res) {
+    console.log(req.params);
+    res.send('ok: '+req.params.name);
+});
+
+router.get("/users", ensureAuthenticated, function(req, res) {
+    res.json({ "displayName": req.user.displayName, "avatar": req.user.photos[0].value });
+  }
+);
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -55,7 +74,7 @@ function ensureAuthenticated(req, res, next) {
     return next();
   }
   // denied. redirect to login
-  res.redirect("/");
+  res.send(401, "Not Authenticated");
 }
 
 module.exports = router;
