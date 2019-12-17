@@ -1,0 +1,65 @@
+{
+	"variables": [],
+	"info": {
+		"name": "files program",
+		"_postman_id": "a3c63095-8b2f-1160-a2c7-0156f4c8039b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/users",
+			"request": {
+				"url": "http://localhost:3000/users",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/files",
+			"request": {
+				"url": "http://localhost:3000/files",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/files/name.txt",
+			"request": {
+				"url": "http://localhost:3000/files/name.txt",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/files",
+			"request": {
+				"url": "http://localhost:3000/files",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"description": "",
+							"type": "file",
+							"src": "187-1877558_undertale-sans-walking-sprite-sheet-pixel-art-maker.png.jpeg"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

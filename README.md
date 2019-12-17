@@ -1,3 +1,4 @@
+# Drop Files
 # Atividade Final Programação Web com Node
 
 Opção escolhida:
@@ -32,5 +33,54 @@ tarefas:
 - Os trabalhos deverão ser acessíveis por meio de algum domínio (sugestão: utilizar zeit/now,netlify, heroku, surge.sh, AWS, Azure...);
 - Os trabalhos poderão seguir a abordagem de RESTFull ou MVC;
 - Poderá ser utilizado qualquer banco de dados nas soluções acima, seja local ou “as a service”.
+
+
+## URL's
+GET /user
+    - 200 success
+        ```json
+        {
+            'displayName' : 'usuario us',
+            'avatar' : "urldoavatar"
+        }
+        ```
+    - 401 error unlogged user
+
+GET /files
+    - 200 success
+        ```json
+        [
+            {'name' : 'usuario.txt', 'url' : "https://s3.aws.com/urlprivadadoarquivo"},
+            {'name' : 'usuario1.txt', 'url' : "https://s3.aws.com/urlprivadadoarquivo1"},
+        ]
+        ```
+    - 401 error unlogged user
+
+DELETE /files
+    - 200 success
+        ```
+        ok
+        ```
+    - 200 error file does not exist
+        ```
+        file does not exist
+        ```
+    - 401 error unlogged user
+
+POST /files
+    - 201 success
+        ```
+        ok
+        ```
+    - 413 error max size exceeded
+        ```
+        max size exceeded
+        ```
+
+    - 400 error full bucket
+        ```
+        full bucket
+        ```
+    - 401 error unlogged user
 
 por Pedro Soares e Diogo Perdigão
