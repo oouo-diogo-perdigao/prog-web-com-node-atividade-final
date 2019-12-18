@@ -6,16 +6,23 @@ var storage = multer.memoryStorage()
 var upload = multer({ storage: storage })
 var AWS = require("aws-sdk");
 
+// AWS.config.getCredentials(function(err) {
+//   if (err) console.log(err.stack);
+//   // credentials not loaded
+//   else {
+//     console.log("Access key:", AWS.config.credentials.accessKeyId);
+//     console.log("Secret access key:", AWS.config.credentials.secretAccessKey);
+//   }
+// });
+AWS.config.loadFromPath("./config.json");
 AWS.config.getCredentials(function(err) {
   if (err) console.log(err.stack);
   // credentials not loaded
   else {
-    console.log("Access key:", 'AKIAII37EGWTOIB7SAWQ');
-    console.log("Secret access key:", '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');
+    console.log("Access key:", AWS.config.credentials.accessKeyId);
+    console.log("Secret access key:", AWS.config.credentials.secretAccessKey);
   }
 });
-
-var basebucket = 'pwndropfiles';
 const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
 var url = require("url");
@@ -61,79 +68,107 @@ router.get(
   }
 );
 
-router.get("/files", ensureAuthenticated, function(req, res) {
-    res.json({ "arquivos": "TODO" });
-    // listar arquivos do bucket pwndropfiles/req.user.username
-});
-
-async function checkBucketExists(bucket) { 
-  console.log('check bucket');
-  const options = { Bucket: bucket };
-  try {
-    await s3.headBucket(options).promise();
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
-
-async function createBucket(bucketName) { 
-  console.log('create bucket');
-  try {
-    await s3.createBucket({Bucket: basebucket+req.user.username}).promise();
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
-
-async function uploadFile(bucketName, file) { 
+/* AWS functions */
+var basebucket = 'pwndropfiles';
+async function uploadFile(bucketName, file, folder) { 
   console.log('upload file');
       try {
         var objectParams = {
           Bucket: bucketName, 
-          Key: file.originalname,
+          Key: folder+'/'+file.originalname,
           Body: file.buffer
         };
         await s3.putObject(objectParams).promise();
         return true;
       } catch (error) {
+        console.log('upload file error');
+        console.log(error);
         return false;
       }
 };
 
+async function listFiles(folder) { 
+  console.log('list file');
+  try {
+    var objectParams = {
+      Bucket: basebucket, 
+      Prefix: folder
+    };
+    let list = await s3.listObjects(objectParams).promise();
+    return list;
+  } catch (error) {
+    console.log('upload file error');
+    console.log(error);
+    return false;
+  }
+};
+
+async function deleteFile(fileName) { 
+  console.log('delete file');
+  try {
+    var objectParams = {
+      Bucket: basebucket, 
+      Key: fileName
+    };
+    await s3.deleteObject(objectParams).promise();
+    return true;
+  } catch (error) {
+    console.log('delete file error');
+    console.log(error);
+    return false;
+  }
+};
+
+async function buildSignedUrl(fileName) { 
+  console.log('signed url file');
+  try {
+    var objectParams = {
+      Bucket: basebucket, 
+      Key: fileName,
+      Expires: 60*60
+    };
+    return await s3.getSignedUrlPromise('getObject', objectParams);
+  } catch (error) {
+    console.log('signed url error');
+    console.log(error);
+    return false;
+  }
+};
+
+async function buildFileList(list) {
+  let fileList = [];
+  for (let i = 0; i < list.length; ++i) {
+    
+    let x = {
+      "name": list[i]['Key'],
+      "lastModified": list[i]['LastModified'],
+      "size": list[i]['Size'],//byte
+      "signedUrl": await buildSignedUrl(list[i]['Key'])
+    };
+    
+    fileList.push(x);
+  }
+  return fileList;
+}
+
+router.get("/files", ensureAuthenticated, function(req, res) {
+    listFiles(req.user.username)
+      .then(result => {
+        buildFileList(result['Contents']).then(finalList => {
+          res.json(200, finalList); 
+        });
+        
+      });
+});
+
 router.post("/files", ensureAuthenticated, upload.single('fileUpload'), function(req, res) {
-
-    console.log(req.file); 
-
-    checkBucketExists(basebucket+req.user.username).then(bucketExists => {
-      if (bucketExists) {
-        uploadFile(basebucket+req.user.username, req.file).then(result => {
-          res.send(201, 'ok'); 
-        });
-      } else {
-        createBucket(basebucket+req.user.username).then(createdBucket => {
-          if (createdBucket) {
-            uploadFile(basebucket+req.user.username, req.file).then(fileUploaded => {
-              if (fileUploaded) {
-                res.send(201, 'ok');
-              } else {
-                res.send(500, 'Fail to upload File');
-              }
-            });
-          } else {
-            res.send(500, 'Fail to create Bucket');
-          }
-        });
-      }
-    });
+    uploadFile(basebucket, req.file, req.user.username)
+      .then(result => { res.send(201, 'ok'); });
 });
 
 router.delete("/files/:name", ensureAuthenticated, function(req, res) {
-    console.log(req.params);
-    res.send('ok: '+req.params.name);
-
-    //deletar pwndropfiles/req.user.username/req.params.name
+  deleteFile(req.params.name)
+      .then(result => { res.send(200, 'ok'); });
 });
 
 router.get("/users", ensureAuthenticated, function(req, res) {

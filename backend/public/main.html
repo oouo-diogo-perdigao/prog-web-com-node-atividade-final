@@ -21,6 +21,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script type="text/javascript">
+
     	$.ajax({
     		url: "./users", success: function(result) {
     			console.log(result);
@@ -53,12 +54,26 @@
 			    });
 			});
 
+    	var x = [];
     	$.ajax({
-			            url: './files/teste',
+    		url: "./files", success: function(result) {
+    			console.log(result);
+    			x = result;
+    			deletar();
+    		}, error: function(a, b, c) { 
+    			console.log(a.responseText);
+    		}
+    	})
+
+    	function deletar() {
+    		    	$.ajax({
+			            url: './files/' + encodeURIComponent(x[1]['Key']),
 			            type: 'DELETE',
 			            success: function (data) {
 			                console.log(data);
 			            }
 			        });
+    	}
+
     </script>
 </html>
