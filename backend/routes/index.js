@@ -6,23 +6,7 @@ var storage = multer.memoryStorage()
 var upload = multer({ storage: storage })
 var AWS = require("aws-sdk");
 
-// AWS.config.getCredentials(function(err) {
-//   if (err) console.log(err.stack);
-//   // credentials not loaded
-//   else {
-//     console.log("Access key:", AWS.config.credentials.accessKeyId);
-//     console.log("Secret access key:", AWS.config.credentials.secretAccessKey);
-//   }
-// });
 AWS.config.loadFromPath("./config.json");
-AWS.config.getCredentials(function(err) {
-  if (err) console.log(err.stack);
-  // credentials not loaded
-  else {
-    console.log("Access key:", AWS.config.credentials.accessKeyId);
-    console.log("Secret access key:", AWS.config.credentials.secretAccessKey);
-  }
-});
 const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
 var url = require("url");
@@ -97,7 +81,7 @@ async function listFiles(folder) {
     let list = await s3.listObjects(objectParams).promise();
     return list;
   } catch (error) {
-    console.log('upload file error');
+    console.log('list file error');
     console.log(error);
     return false;
   }
@@ -154,25 +138,44 @@ async function buildFileList(list) {
 router.get("/files", ensureAuthenticated, function(req, res) {
     listFiles(req.user.username)
       .then(result => {
-        buildFileList(result['Contents']).then(finalList => {
-          res.json(200, finalList); 
-        });
-        
+        if (result) {
+          buildFileList(result['Contents']).then(finalList => {
+            res.json(200, finalList); 
+          });
+        } else {
+          res.send(500, "List File Error");
+        }
       });
 });
 
 router.post("/files", ensureAuthenticated, upload.single('fileUpload'), function(req, res) {
+  if(req.file.size <= 10*1024*1024) {
     uploadFile(basebucket, req.file, req.user.username)
-      .then(result => { res.send(201, 'ok'); });
+      .then(result => { 
+        if(result) {
+          res.send(201, 'ok'); 
+        }  else {
+          res.send(500, "Upload File Error");
+        }
+      });
+  } else {
+    res.send(413, "Max Size Exceeded");
+  }
 });
 
 router.delete("/files/:name", ensureAuthenticated, function(req, res) {
   deleteFile(req.params.name)
-      .then(result => { res.send(200, 'ok'); });
+      .then(result => {
+        if (result) {
+          res.send(200, 'ok');
+        } else {
+          res.send(500, "Delete File Error");
+        }
+      });
 });
 
 router.get("/users", ensureAuthenticated, function(req, res) {
-    res.json({ "displayName": req.user.displayName, "avatar": req.user.photos[0].value });
+    res.json(200, { "displayName": req.user.displayName, "avatar": req.user.photos[0].value });
   }
 );
 
