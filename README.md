@@ -39,6 +39,10 @@ GET /files
     {'name' : 'usuario1.txt', 'url' : "https://s3.aws.com/urlprivadadoarquivo1"},
 ]
 ```
+- 500 error list files
+```
+list files error
+```
 - 401 error unlogged user
 
 DELETE /files
@@ -47,9 +51,9 @@ DELETE /files
 ```
 ok
 ```
-- 200 error file does not exist
+- 500 error delete file
 ```
-file does not exist
+delete file error
 ```
 - 401 error unlogged user
 
@@ -59,21 +63,12 @@ POST /files
 ```
 ok
 ```
-- 413 error max size exceeded
+- 413 error max size exceeded > 10 mb
 ```
 max size exceeded
 ```
-
-- 400 error full bucket
-```
-full bucket
-```
-- 500 error upload file
+- 500 upload file error
 ```
 Fail to upload File
-```
-- 500 error create bucket
-```
-Fail to create Bucket
 ```
 - 401 error unlogged user
