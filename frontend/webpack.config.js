@@ -12,8 +12,8 @@ module.exports = {
 	resolve: { extensions: [".js"] },
 	plugins: [
 		new HtmlWebpackPlugin({ 
-	 		filename: 'index.html',
-	 		template: path.join(__dirname, 'src/index.html')
+	 		filename: 'main.html',
+	 		template: path.join(__dirname, 'src/main.html')
 	 	}),
 	 	new MiniCssExtractPlugin({
 	      // Options similar to the same options in webpackOptions.output
@@ -35,11 +35,11 @@ module.exports = {
 					}
 				]
 			},
-			//SE PRECISAR DE ARQUIVOS:
-			// {
-			// 	test: /\.(jpe?g|ico|png|gif|svg)$/i,
-			// 	loader: 'file-loader?name=img/[name].[ext]' 
-			// },
+			// SE PRECISAR DE ARQUIVOS:
+			{
+				test: /\.(jpe?g|ico|png|gif|svg)$/i,
+				loader: 'file-loader?name=img/[name].[ext]' 
+			},
 			{
 		    	test: /\.s[ac]ss$/i,
 		        use: [

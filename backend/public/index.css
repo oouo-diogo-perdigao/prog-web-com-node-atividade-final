@@ -1,0 +1,191 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+body {
+  font-family: sans-serif;
+  height: 100vh;
+  width: 100vw;
+  background-color: dimgray;
+  margin: 0px;
+}
+
+.center {
+  text-align: center;
+}
+
+.border-box {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.form-card {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 40px;
+  background-color: silver;
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+          box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  height: 400px;
+  margin-top: calc(50vh - 300px);
+  margin-left: calc(50vw - 200px);
+}
+
+.form-card .logo {
+  height: auto;
+  width: 320px;
+  padding-bottom: 20px;
+}
+
+.form-card input {
+  height: 44px;
+  width: 100%;
+  -webkit-appearance: none;
+  background: white;
+  border: 2px solid silver;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.form-card input:hover,
+input:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  border: 2px solid black;
+}
+
+.form-card input[type="submit"] {
+  height: 2em;
+  font-size: 1.6em;
+  font-weight: bold;
+  background-color: #909090;
+  border: 2px solid #909090;
+  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+          box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+}
+
+.form-card .links a,
+a:hover {
+  font-size: 0.8em;
+  color: dimgray;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.form-card .links a:hover {
+  color: blue;
+}
+
+.col-1 {
+  width: 8.33%;
+  display: inline-block;
+}
+
+.col-2 {
+  width: 16.66%;
+  display: inline-block;
+}
+
+.col-3 {
+  width: 25%;
+  display: inline-block;
+}
+
+.col-4 {
+  width: 33.33%;
+  display: inline-block;
+}
+
+.col-5 {
+  width: 41.66%;
+  display: inline-block;
+}
+
+.col-6 {
+  width: 50%;
+  display: inline-block;
+}
+
+.col-7 {
+  width: 58.33%;
+  display: inline-block;
+}
+
+.col-8 {
+  width: 66.66%;
+  display: inline-block;
+}
+
+.col-9 {
+  width: 75%;
+  display: inline-block;
+}
+
+.col-10 {
+  width: 83.33%;
+  display: inline-block;
+}
+
+.col-11 {
+  width: 91.66%;
+  display: inline-block;
+}
+
+.col-12 {
+  width: 100%;
+  display: table;
+}
+
+[class*="-clean"] {
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+  background-color: white;
+}
+
+/Divs que sigam o padrao clean/
+.google-btn {
+  width: 100%;
+  height: 48px;
+  background-color: #3c4146;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+          box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 1px;
+}
+
+.google-btn .google-icon-wrapper {
+  border-radius: 2px;
+  background-color: #fff;
+  padding: 15px;
+  width: 18px;
+  height: 18px;
+  float: left;
+}
+
+.google-btn .google-icon-wrapper img {
+  width: 18px;
+  height: 18px;
+}
+
+.google-btn .google-text-wrapper {
+  float: right;
+  width: calc(100% - 50px);
+  color: #fff;
+  height: 100%;
+  line-height: 48px;
+  font-family: Roboto,arial,sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .21px;
+  vertical-align: top;
+  text-align: center;
+}
+
+.google-btn:hover {
+  -webkit-box-shadow: 0 0 6px #4285f4;
+          box-shadow: 0 0 6px #4285f4;
+}
+
+.google-btn:active {
+  background: #1669f2;
+}

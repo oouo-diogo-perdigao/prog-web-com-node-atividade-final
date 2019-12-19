@@ -1,6 +1,3 @@
-import '../css/normalize.css';
-import '../css/styles.scss';
-
 let fileList = [];
 let table;
 
@@ -80,14 +77,14 @@ function uploadFile(form) {
     });
 }
 
-function confirgureUploadForm() {
+function configureUploadForm() {
 	var form;
-    $('#fileUpload').change(function (event) {
+    $('#selectFileBtn').change(function (event) {
         form = new FormData();
         form.append('fileUpload', event.target.files[0]);
     });
 
-    $('#btnEnviar').click(function () { uploadFile(form); }
+    $('#uploadBtn').click(function () { uploadFile(form); });
 }
 
 
