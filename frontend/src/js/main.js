@@ -18,13 +18,14 @@ function drawTable() {
 				  		<i class=\"fa fa-download\"></i> Download
 				  	</button>
 				</a>
-              <button class=\"btn btn-danger delete\" onclick=\"deleteFile(\'${fileList[i]['name']}\')\">
+              <button class=\"btn btn-danger delete\" data-name=\"${fileList[i]['name']}\">
               	<i class="fa fa-trash"></i> Delete
               </button>
 			</td>
 		</tr>`;
 	}
 	$('#fileTable tbody').empty().append(rows);
+	$(".delete").click(function() { deleteFile($(this).attr('data-name')); });
 }
 
 function loadUserData() {
@@ -54,39 +55,64 @@ function deleteFile(fileName) {
     	url: './files/' + encodeURIComponent(fileName),
         type: 'DELETE',
         success: function (data) {
-        	//TODO apagar da tabela
+        	for (let i = 0; i < fileList.length; ++i) {
+        		if (fileList[i]['name'] === fileName) {
+        			fileList.splice(i, 1);
+        			i = fileList.length;
+        		}
+        	}
+        	drawTable();
         }
     });
 }
 
-$(".delete").click(function() {
-	deleteFile($(this).attr('data-name'));
-});
+function uploadFile(form) {
+	$.ajax({
+    	url: './files',
+        data: form,
+        processData: false,
+        contentType: false,
+        enctype: "multipart/form-data",
+        type: 'POST',
+        success: function (data) {
+        	loadTableItens();
+        }
+    });
+}
 
-$("uploadBtn").click(function() {
-	deleteFile($(this).attr('data-name'));
-});
+function confirgureUploadForm() {
+	var form;
+    $('#fileUpload').change(function (event) {
+        form = new FormData();
+        form.append('fileUpload', event.target.files[0]);
+    });
+
+    $('#btnEnviar').click(function () { uploadFile(form); }
+}
+
 
 $(document).ready(
 	() => {
 		// table = $('#fileTable').DataTable();
+		configureUploadForm();
 		loadUserData();
-		// loadTableItens();
-		fileList = [
-			{
-		      "name": 'arq1',
-		      "lastModified": '01/02/1989',
-		      "size": '2GB',
-		      "signedUrl": 'www.google.com'
-		    },
-		    {
-		      "name": 'arq2',
-		      "lastModified": '03/02/1989',
-		      "size": '3GB',
-		      "signedUrl": 'www.google.com'
-		    }
-		];
-        drawTable();
+		loadTableItens();
+
+		// fileList = [
+		// 	{
+		//       "name": 'arq1',
+		//       "lastModified": '01/02/1989',
+		//       "size": '2GB',
+		//       "signedUrl": 'www.google.com'
+		//     },
+		//     {
+		//       "name": 'arq2',
+		//       "lastModified": '03/02/1989',
+		//       "size": '3GB',
+		//       "signedUrl": 'www.google.com'
+		//     }
+		// ];
+  //       drawTable();
 	}
 );
 
