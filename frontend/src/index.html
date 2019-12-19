@@ -16,17 +16,22 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-light bg-light">
-          <a class="navbar-brand" href="#">
-            <img id="avatar" src="/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-            <span id="userName"><i class="fas fa-user"></i> Carregando usuário...</span>
-          </a>
-        </nav>
-        
-        <input id="fileUpload" type="file" name="uploadfile" />
-        <input id="btnEnviar" type="submit" name="" />
-      </header>
-      <main>
+      <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+          <img id="avatar" src="/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+          <span id="userName"><i class="fas fa-user"></i> Carregando usuário...</span>
+        </a>
+
+        <form class="form-inline" style="flex-flow: unset;">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="fileUpload" aria-describedby="inputGroupFileAddon01">
+            <label class="custom-file-label" for="fileUpload">Selecione o arquivo</label>
+          </div>
+          <button class="btn btn-success" type="button" style="margin-left:5px;">Upload</button>
+        </form>
+      </nav>
+    </header>
+    <main>
       <table id="fileTable" class="table">
         <thead class="thead-dark">
           <tr>
@@ -36,19 +41,8 @@
             <td scope="col">Ações</td>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-              <td>Nome</td>
-              <td>Última vez que foi modificado</td>
-              <td>Tamanho</td>
-              <td>
-                <a href=""><button class="btn btn-success"><i class="fa fa-download"></i> Download</button></a>
-                <button class="btn btn-danger delete" data-name="nomearquivo.txt"><i class="fa fa-trash"></i> Delete</button>
-              </td>
-            </tr>
-          <tr>
-        </tbody>
+        <tbody></tbody>
       </table>
-      </main>
+    </main>
   </body>
 </html>
