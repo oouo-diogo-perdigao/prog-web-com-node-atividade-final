@@ -1,48 +1,41 @@
-<!doctype html>
-<html class="no-js" lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title>Login Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="531587136969-fdh72m1o3l5j8so81aojkbkfb9m15mgf.apps.googleusercontent.com">
+    <link rel="stylesheet" type="text/css" href="/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"></head>
+  </head>
+  <body>
+    <div>
 
-<head>
-  <meta charset="utf-8">
-  <title>Atividade PWN</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+      <header>
+        <img id="avatar" src="">
+        <p id="userName">Carregando usuário...</p>
+      </header>
+      
+      <input id="fileUpload" type="file" name="uploadfile" />
+      <input id="btnEnviar" type="submit" name="" />
+      <!-- <input type="file" id="fileUpload" name="fileUpload" />
+    <input type="button" id="btnEnviar" value="Enviar" /> -->
 
-  <!-- <link rel="manifest" href="site.webmanifest"> -->
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
+    <table id="fileTable">
+      <thead>
+        <tr>
+          <td class="sorting">Nome</td>
+          <td class="sorting">Última vez que foi modificado</td>
+          <td class="sorting">Tamanho</td>
+          <td>Ações</td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    </div>
 
-  <meta name="theme-color" content="#fafafa">
-</head>
-
-<body>
-	<article>
-		<h1>Login</h1>
-    <form>
-      <label for="username"><b>Username</b></label>
-      <input type="text" placeholder="Digite seu usuário" name="username" required>
-
-      <label for="password"><b>Password</b></label>
-      <input type="password" placeholder="Digite sua senha" name="password" required>
-
-      <button type="submit">Login</button>
-    </form> 
-	</article>
-  <!--[if IE]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-  <![endif]-->
-
-  <!-- Add your site or application content here -->
-  
-  
-  <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script> -->
-
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <!-- <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set','transport','beacon'); ga('send', 'pageview')
-  </script> -->
-  <!-- <script src="https://www.google-analytics.com/analytics.js" async></script> -->
-</body>
-
+  </body>
 </html>
